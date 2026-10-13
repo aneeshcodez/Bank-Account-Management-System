@@ -33,13 +33,30 @@ class BankAccount:
             return False
 
         self.balance -= withdraw_amount
-        print(f"Balance: ₹{self.balance}")
+        print(f"Balance: {self.balance}")
         print("Withdrawal successful")
         return True
 
     def check_balance(self):
-        print(f"CURRENT BALANCE: ₹{self.balance}")
+        print(f"CURRENT BALANCE: {self.balance}")
 
+    def __str__(self):
+        '''
+        Method __str__ should always return string, not print.
+        Else we will get "__str__ returned non-string (type NoneType) error" in python
+        Because the str fucntion,although is mostly used to print values but actually
+        is designed to return a string,not to print one. In your class str function
+        is calling the print directly while it is returning nothing ,
+        that explains your error output.
+        '''
+        return f"Name: {self.name}\n Account No: {self.account_no}\n Balance: {self.balance}"
+
+# Creating Objs for Class
+account_1 = BankAccount("Ram", 101, 50)
+account_1.display_account_details()
+account_1.deposit_money(100)
+account_1.withdraw_money(140)
+account_1.check_balance()
 
 class SavingsAccount(BankAccount):
     min_balance_required = 50
@@ -73,6 +90,8 @@ class SavingsAccount(BankAccount):
 
         return super().withdraw_money(withdraw_amount)
 
+    def __str__(self):
+        return super().__str__()
 
 # Testing SavingsAccount
 sa_account_1 = SavingsAccount("Ram", 1011, 100)
@@ -92,6 +111,9 @@ print("\nFinal balance:")
 sa_account_1.check_balance()
 
 print(f"\nTotal accounts created: {BankAccount.total_no_accounts}")
+
+print(sa_account_1)
+print(account_1)
 
 '''
 i need a setter (you actually came up with this ,very good !)
